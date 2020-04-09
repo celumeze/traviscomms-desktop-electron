@@ -1,4 +1,84 @@
-<ion-content id="register-content">
-  <ion-label>Register</ion-label>
-</ion-content>
 
+ <ion-grid>
+   <ion-row>
+     <ion-col>
+      <div class="ion-register-container">
+        <form novalidate [formGroup]="registerForm" (ngSubmit)="createAccount()">
+          <ion-item style="padding-bottom: 4%;">
+            <ion-text color="tertiary" style="padding-top: 2%;">
+              <h5>Create your Flexicomms Account</h5>
+            </ion-text>
+          </ion-item>
+          <ion-list lines="full">
+            <ion-item>
+              <ion-label position="stacked" class="ion-form-font">First Name <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="firstName"></ion-input>
+            </ion-item>
+      
+            <ion-item>
+              <ion-label position="stacked" class="ion-form-font">Last Name <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="lastName"></ion-input>
+            </ion-item>
+      
+            <ion-item>
+              <ion-label position="stacked" class="ion-form-font">Email Address <ion-text color="danger">*</ion-text></ion-label>
+              <ion-input type="text" formControlName="emailAddress"></ion-input>
+              <span class="text-danger font-weight-bold" *ngIf="registerForm.get('emailAddress').errors?.email">
+                Please enter a valid email address
+              </span>
+            </ion-item>      
+            <ion-item>
+              <ion-label position="stacked" class="ion-form-font">Company Name</ion-label>
+              <ion-input  type="text" formControlName="company"></ion-input>
+            </ion-item> 
+            
+            <div formGroupName="passwordGroup">
+              <ion-item>
+                <ion-label position="stacked" class="ion-form-font">Password <ion-text color="danger">*</ion-text></ion-label>
+                <ion-input type="password" formControlName="password"></ion-input>
+              </ion-item>              
+              <ion-item>
+                <ion-label position="stacked" class="ion-form-font">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
+                <ion-input type="password" formControlName="confirmPassword"></ion-input>
+                <span class="text-danger font-weight-bold" *ngIf="registerForm.get('passwordGroup').errors?.passwordMatch">
+                  Passwords do not match
+                </span>
+              </ion-item>
+            </div>                 
+              <ion-grid>
+                <ion-row formGroupName="subscriptionTypeGroup">
+                  <ion-col>
+                    <ion-item class="ion-form-item">
+                      <ion-checkbox color="dark" slot="start" value="trial" formControlName="trialSubscriptionType" (click)="setSubscriptionType('trial')"></ion-checkbox>
+                      <ion-label>Trial (2 Days)</ion-label>
+                    </ion-item>              
+                  </ion-col>
+                  <ion-col>
+                    <ion-item class="ion-form-item">
+                      <ion-checkbox color="tertiary" slot="start" value="paid" formControlName="paidSubscriptionType" (click)="setSubscriptionType('paid')"></ion-checkbox>
+                      <ion-label>Paid (€40 per month)</ion-label>
+                    </ion-item>                   
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <ion-item *ngIf="!registerForm.get('subscriptionTypeGroup.trialSubscriptionType').value && !registerForm.get('subscriptionTypeGroup.paidSubscriptionType').value">
+                      <span class="text-danger text-center font-weight-bold">
+                        Please select a subscription 
+                      </span>
+                    </ion-item>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            
+          </ion-list>
+          <div class="ion-padding" style="text-align: center;">
+            <ion-button [disabled]="!registerForm.valid" class="small" fill="outline" type="submit" color="primary">Create account</ion-button>
+          </div>
+        </form>
+      </div>
+     </ion-col>
+   </ion-row>
+ </ion-grid>
+ 
+  
