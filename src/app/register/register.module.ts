@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { RegisterPageRoutingModule } from './register-routing.module';
 
 import { RegisterPage } from './register.page';
+import { PasswordStrengthComponent } from '../password-strength/password-strength.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { RegisterPage } from './register.page';
     IonicModule,
     RegisterPageRoutingModule
   ],
-  declarations: [RegisterPage]
+  declarations: [RegisterPage, PasswordStrengthComponent]
 })
 export class RegisterPageModule {}

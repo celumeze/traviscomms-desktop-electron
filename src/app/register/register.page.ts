@@ -1,28 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, AbstractControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { NewClient } from '../common/newclient';
 import { SubscriptionType } from '../common/subscriptiontype';
+import { CommonValidators } from '../common-validators/common-validators';
+import { ValidatorMessages } from '../common-validators/validator-messages';
 
-function passwordCompare(c: AbstractControl): { [key: string]: boolean } | null {
-  const passwordControl = c.get('password');
-  const confirmPasswordControl = c.get('confirmPassword');
-
-  if (passwordControl.value === confirmPasswordControl.value) {
-  return null;
-  }
-  // tslint:disable-next-line:object-literal-key-quotes
-  return { 'passwordMatch': true};
-}
-
-function subscriptionSelectionCheck(c: AbstractControl): { [key: string]: boolean } | null {
+function subscriptionSelectionCheck(
+  c: AbstractControl
+): { [key: string]: boolean } | null {
   const trialSubscriptionTypeControl = c.get('trialSubscriptionType');
   const paidSubscriptionTypeControl = c.get('paidSubscriptionType');
 
-  if (trialSubscriptionTypeControl.value === true || paidSubscriptionTypeControl.value === true) {
+  if (
+    trialSubscriptionTypeControl.value === true ||
+    paidSubscriptionTypeControl.value === true
+  ) {
     return null;
   }
   // tslint:disable-next-line:object-literal-key-quotes
-  return { 'subscriptionCheck': true };
+  return { subscriptionCheck: true };
 }
 
 @Component({
@@ -35,6 +36,14 @@ export class RegisterPage implements OnInit {
   newClient = new NewClient();
   subscriptionTypes: SubscriptionType[] = [];
 
+  emailValidationMessage: string;
+  passwordMismatchMessage: string;
+  invalidPasswordMessage: string;
+
+  // output
+  isPasswordValid = false;
+
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -43,31 +52,66 @@ export class RegisterPage implements OnInit {
       lastName: ['', Validators.required],
       emailAddress: ['', [Validators.required, Validators.email]],
       company: '',
-      passwordGroup: this.fb.group({
-        password: ['', Validators.required],
-        confirmPassword: ['', Validators.required]
-      }, { validators: passwordCompare }),
-      subscriptionTypeGroup: this.fb.group({
-        trialSubscriptionType: true,
-        paidSubscriptionType: false
-      }, { validators: subscriptionSelectionCheck })
+      passwordGroup: this.fb.group(
+        {
+          password: ['', [Validators.required, CommonValidators.checkPwdRequirement(this.isPasswordValid)]],
+          confirmPassword: ['', Validators.required],
+        },
+        {
+          validators: CommonValidators.textInputMatch(
+            'password',
+            'confirmPassword'
+          ),
+        }
+      ),
+      subscriptionTypeGroup: this.fb.group(
+        {
+          trialSubscriptionType: true,
+          paidSubscriptionType: false,
+        },
+        { validators: subscriptionSelectionCheck }
+      ),
     });
+
+    // validation watcher
+    const emailFormControl = this.registerForm.get('emailAddress');
+    const confirmPasswordFormControl = this.registerForm.get('passwordGroup');
+    const passwordFormControl = this.registerForm.get('passwordGroup.password');
+
+    emailFormControl.valueChanges.subscribe((value) => {
+        this.emailValidationMessage =
+        CommonValidators.setValidationMessage(emailFormControl, ValidatorMessages.getRegFormValidationMessages());
+    });
+    confirmPasswordFormControl.valueChanges.subscribe((value) => {
+      this.passwordMismatchMessage =
+      CommonValidators.setValidationMessage(confirmPasswordFormControl, ValidatorMessages.getRegFormValidationMessages());
+  });
+    passwordFormControl.valueChanges.subscribe((value) => {
+      this.invalidPasswordMessage =
+      CommonValidators.setValidationMessage(passwordFormControl, ValidatorMessages.getRegFormValidationMessages());
+  });
   }
 
   createAccount() {
-    console.log(this.registerForm);
+    // console.log(this.registerForm);
   }
 
   setSubscriptionType(selectedSubType: string) {
     if (selectedSubType === 'trial') {
-      this.registerForm.controls.subscriptionTypeGroup.patchValue({
-        paidSubscriptionType: false
+      this.registerForm.get('subscriptionTypeGroup').patchValue({
+        paidSubscriptionType: false,
       });
     } else {
       this.registerForm.controls.subscriptionTypeGroup.patchValue({
-        trialSubscriptionType: false
+        trialSubscriptionType: false,
       });
     }
+  }
+
+  passwordValid(event) {
+    this.isPasswordValid = event;
+    this.registerForm.get('passwordGroup.password').setValidators(CommonValidators.checkPwdRequirement(this.isPasswordValid));
+    this.registerForm.get('passwordGroup.password').updateValueAndValidity();
   }
 
   populateSubscriptionTypes() {}

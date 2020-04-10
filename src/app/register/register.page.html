@@ -23,8 +23,8 @@
             <ion-item>
               <ion-label position="stacked" class="ion-form-font">Email Address <ion-text color="danger">*</ion-text></ion-label>
               <ion-input type="text" formControlName="emailAddress"></ion-input>
-              <span class="text-danger font-weight-bold" *ngIf="registerForm.get('emailAddress').errors?.email">
-                Please enter a valid email address
+              <span class="text-danger font-weight-bold">
+                {{ emailValidationMessage }}
               </span>
             </ion-item>      
             <ion-item>
@@ -36,12 +36,16 @@
               <ion-item>
                 <ion-label position="stacked" class="ion-form-font">Password <ion-text color="danger">*</ion-text></ion-label>
                 <ion-input type="password" formControlName="password"></ion-input>
+                <app-password-strength class="text-center" (passwordStrength)="passwordValid($event)" [passwordToCheck]="registerForm.get('passwordGroup.password').value"></app-password-strength>
+                <span class="text-danger font-weight-bold">
+                  {{ invalidPasswordMessage }}
+                </span>
               </ion-item>              
               <ion-item>
                 <ion-label position="stacked" class="ion-form-font">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
                 <ion-input type="password" formControlName="confirmPassword"></ion-input>
-                <span class="text-danger font-weight-bold" *ngIf="registerForm.get('passwordGroup').errors?.passwordMatch">
-                  Passwords do not match
+                <span class="text-danger font-weight-bold">
+                  {{ passwordMismatchMessage }}
                 </span>
               </ion-item>
             </div>                 
