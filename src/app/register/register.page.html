@@ -6,7 +6,7 @@
         <form novalidate [formGroup]="registerForm" (ngSubmit)="createAccount()">
           <ion-item style="padding-bottom: 4%;">
             <ion-text color="tertiary" style="padding-top: 2%;">
-              <h5>Create your Flexicomms Account</h5>
+              <h5>Create your TravisComms Account</h5>
             </ion-text>
           </ion-item>
           <ion-list lines="full">
@@ -51,17 +51,13 @@
             </div>                 
               <ion-grid>
                 <ion-row formGroupName="subscriptionTypeGroup">
-                  <ion-col>
+                  <ion-col *ngFor="let subscriptiontype of subscriptionTypes; let i = index" >
                     <ion-item class="ion-form-item">
-                      <ion-checkbox color="dark" slot="start" value="trial" formControlName="trialSubscriptionType" (click)="setSubscriptionType('trial')"></ion-checkbox>
-                      <ion-label>Trial (2 Days)</ion-label>
+                      <ion-label *ngIf="subscriptiontype.price > 0">{{subscriptiontype.name}} (€{{subscriptiontype.price}} per month)</ion-label>
+                      <ion-label *ngIf="subscriptiontype.price === 0">{{subscriptiontype.name}} ({{subscriptiontype.periodInDays}} Days)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ion-label>
+                      <ion-checkbox *ngIf="subscriptiontype.price > 0" color="tertiary" slot="start" value="paid" formControlName="paidSubscriptionType" (click)="setSubscriptionType('paid')"></ion-checkbox>
+                      <ion-checkbox *ngIf="subscriptiontype.price === 0" color="dark" slot="start" value="trial" formControlName="trialSubscriptionType" (click)="setSubscriptionType('trial')"></ion-checkbox>
                     </ion-item>              
-                  </ion-col>
-                  <ion-col>
-                    <ion-item class="ion-form-item">
-                      <ion-checkbox color="tertiary" slot="start" value="paid" formControlName="paidSubscriptionType" (click)="setSubscriptionType('paid')"></ion-checkbox>
-                      <ion-label>Paid (€40 per month)</ion-label>
-                    </ion-item>                   
                   </ion-col>
                 </ion-row>
                 <ion-row>

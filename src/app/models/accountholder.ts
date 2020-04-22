@@ -1,4 +1,4 @@
-export class NewClient {
+export class AccountHolder {
     constructor() {
         this.firstName = '';
         this.lastName = '';

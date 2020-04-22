@@ -1,6 +1,6 @@
 {
-  "appId": "flexicomms.desktop.ui",
-  "appName": "flexicommsdesktopui",
+  "appId": "traviscomms.desktop.ui",
+  "appName": "traviscomms",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
