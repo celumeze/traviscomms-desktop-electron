@@ -1,4 +1,4 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const isDevMode = require('electron-is-dev');
 const { CapacitorSplashScreen, configCapacitor } = require('@capacitor/electron');
 
@@ -38,7 +38,9 @@ async function createWindow () {
       nodeIntegration: true,
       preload: path.join(__dirname, 'node_modules', '@capacitor', 'electron', 'dist', 'electron-bridge.js')
     }
+    
   });
+
 
   configCapacitor(mainWindow);
 
@@ -48,7 +50,7 @@ async function createWindow () {
     // If we are developers we might as well open the devtools by default.
     mainWindow.webContents.openDevTools();
   }
-
+  
   if(useSplashScreen) {
     splashScreen = new CapacitorSplashScreen(mainWindow);
     splashScreen.init();
@@ -58,7 +60,7 @@ async function createWindow () {
       mainWindow.show();
     });
   }
-
+  //startup();
 }
 
 // This method will be called when Electron has finished
@@ -81,6 +83,11 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow();
   }
+
+
 });
 
 // Define any IPC or other custom functionality below here
+function startup() {
+  ipcMain.on('subscriptiontypes', (evt, subscriptiontypes) => console.log(subscriptiontypes));
+}

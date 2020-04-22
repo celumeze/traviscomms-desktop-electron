@@ -5,10 +5,12 @@ import {
   Validators,
   AbstractControl,
 } from '@angular/forms';
-import { NewClient } from '../common/newclient';
-import { SubscriptionType } from '../common/subscriptiontype';
+import { AccountHolder } from '../models/accountholder';
+import { SubscriptionType } from '../models/subscriptiontype';
 import { CommonValidators } from '../common-validators/common-validators';
 import { ValidatorMessages } from '../common-validators/validator-messages';
+import { SubscriptionTypeService } from '../subscriptiontypes/subscriptiontype.service';
+import { Utils } from '../core/utils';
 
 function subscriptionSelectionCheck(
   c: AbstractControl
@@ -33,7 +35,7 @@ function subscriptionSelectionCheck(
 })
 export class RegisterPage implements OnInit {
   registerForm: FormGroup;
-  newClient = new NewClient();
+  newAccountHolder = new AccountHolder();
   subscriptionTypes: SubscriptionType[] = [];
 
   emailValidationMessage: string;
@@ -44,7 +46,7 @@ export class RegisterPage implements OnInit {
   isPasswordValid = false;
 
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private _subscriptionTypeService: SubscriptionTypeService) {}
 
   ngOnInit() {
     this.registerForm = this.fb.group({
@@ -64,14 +66,13 @@ export class RegisterPage implements OnInit {
           ),
         }
       ),
-      subscriptionTypeGroup: this.fb.group(
-        {
-          trialSubscriptionType: true,
-          paidSubscriptionType: false,
-        },
-        { validators: subscriptionSelectionCheck }
-      ),
+      subscriptionTypeGroup: this.buildSubscriptionTypes()
     });
+
+    //get available subscription types
+    this._subscriptionTypeService.getSubscriptionTypes().subscribe(subscriptionTypes => {
+      this.subscriptionTypes = subscriptionTypes;
+    }, error => Utils.formatError(error));
 
     // validation watcher
     const emailFormControl = this.registerForm.get('emailAddress');
@@ -92,6 +93,8 @@ export class RegisterPage implements OnInit {
   });
   }
 
+
+  //Functions
   createAccount() {
     // console.log(this.registerForm);
   }
@@ -114,5 +117,13 @@ export class RegisterPage implements OnInit {
     this.registerForm.get('passwordGroup.password').updateValueAndValidity();
   }
 
-  populateSubscriptionTypes() {}
+  buildSubscriptionTypes(): FormGroup {
+    return this.fb.group(
+      {
+        trialSubscriptionType: true,
+        paidSubscriptionType: false,
+      },
+      { validators: subscriptionSelectionCheck }
+    );
+  }
 }
