@@ -1,4 +1,5 @@
 import { ValidatorFn, AbstractControl } from '@angular/forms';
+import { LoadingController, ToastController } from '@ionic/angular';
 
 export class CommonValidators {
   public static textInputMatch(
@@ -40,4 +41,28 @@ export class CommonValidators {
         .join(' ');
     }
   }
+
+  ///for page loading spinner (Ionic)
+  public static async presentLoading(loadingController: LoadingController): Promise<HTMLIonLoadingElement> {
+    const loading = await loadingController.create({
+      message: 'Please wait...',
+    });
+    await loading.present();
+    return loading;    
+  }
+
+  //for message
+
+  //for displaying success toast message
+  public static async showToaster(toastController: ToastController, message: string) {
+    const toast = await toastController.create({
+      message: message,
+      duration: 4000
+    });
+    toast.present();
+    }
+
+    //error messages
+    public static internalServerError: string = "An error occured. Please try again";
+    public static emptyGuid = "00000000-0000-0000-0000-000000000000";
 }
