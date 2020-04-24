@@ -1,84 +1,102 @@
 
- <ion-grid>
-   <ion-row>
-     <ion-col>
-      <div class="ion-register-container">
-        <form novalidate [formGroup]="registerForm" (ngSubmit)="createAccount()">
-          <ion-item style="padding-bottom: 4%;">
-            <ion-text color="tertiary" style="padding-top: 2%;">
-              <h5>Create your TravisComms Account</h5>
-            </ion-text>
-          </ion-item>
-          <ion-list lines="full">
-            <ion-item>
-              <ion-label position="stacked" class="ion-form-font">First Name <ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="text" formControlName="firstName"></ion-input>
-            </ion-item>
-      
-            <ion-item>
-              <ion-label position="stacked" class="ion-form-font">Last Name <ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="text" formControlName="lastName"></ion-input>
-            </ion-item>
-      
-            <ion-item>
-              <ion-label position="stacked" class="ion-form-font">Email Address <ion-text color="danger">*</ion-text></ion-label>
-              <ion-input type="text" formControlName="emailAddress"></ion-input>
-              <span class="text-danger font-weight-bold">
-                {{ emailValidationMessage }}
-              </span>
-            </ion-item>      
-            <ion-item>
-              <ion-label position="stacked" class="ion-form-font">Company Name</ion-label>
-              <ion-input  type="text" formControlName="company"></ion-input>
-            </ion-item> 
-            
-            <div formGroupName="passwordGroup">
-              <ion-item>
-                <ion-label position="stacked" class="ion-form-font">Password <ion-text color="danger">*</ion-text></ion-label>
-                <ion-input type="password" formControlName="password"></ion-input>
-                <app-password-strength class="text-center" (passwordStrength)="passwordValid($event)" [passwordToCheck]="registerForm.get('passwordGroup.password').value"></app-password-strength>
-                <span class="text-danger font-weight-bold">
-                  {{ invalidPasswordMessage }}
-                </span>
-              </ion-item>              
-              <ion-item>
-                <ion-label position="stacked" class="ion-form-font">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
-                <ion-input type="password" formControlName="confirmPassword"></ion-input>
-                <span class="text-danger font-weight-bold">
-                  {{ passwordMismatchMessage }}
-                </span>
-              </ion-item>
-            </div>                 
-              <ion-grid>
-                <ion-row formGroupName="subscriptionTypeGroup">
-                  <ion-col *ngFor="let subscriptiontype of subscriptionTypes; let i = index" >
-                    <ion-item class="ion-form-item">
-                      <ion-label *ngIf="subscriptiontype.price > 0">{{subscriptiontype.name}} (€{{subscriptiontype.price}} per month)</ion-label>
-                      <ion-label *ngIf="subscriptiontype.price === 0">{{subscriptiontype.name}} ({{subscriptiontype.periodInDays}} Days)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ion-label>
-                      <ion-checkbox *ngIf="subscriptiontype.price > 0" color="tertiary" slot="start" value="paid" formControlName="paidSubscriptionType" (click)="setSubscriptionType('paid')"></ion-checkbox>
-                      <ion-checkbox *ngIf="subscriptiontype.price === 0" color="dark" slot="start" value="trial" formControlName="trialSubscriptionType" (click)="setSubscriptionType('trial')"></ion-checkbox>
-                    </ion-item>              
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <ion-col>
-                    <ion-item *ngIf="!registerForm.get('subscriptionTypeGroup.trialSubscriptionType').value && !registerForm.get('subscriptionTypeGroup.paidSubscriptionType').value">
-                      <span class="text-danger text-center font-weight-bold">
-                        Please select a subscription 
-                      </span>
-                    </ion-item>
-                  </ion-col>
-                </ion-row>
-              </ion-grid>
-            
-          </ion-list>
-          <div class="ion-padding" style="text-align: center;">
-            <ion-button [disabled]="!registerForm.valid" class="small" fill="outline" type="submit" color="primary">Create account</ion-button>
-          </div>
-        </form>
-      </div>
-     </ion-col>
-   </ion-row>
- </ion-grid>
+<ion-content>
+
+  <ion-grid class="ion-container"> 
+    <ion-row class="ion-register-message">
+      <ion-col class="text-center">
+        <ion-text>
+          <h4 *ngIf="responseMessage.errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert"> 
+            {{responseMessage.errorMessage}}
+            <button type="button" class="close"  aria-label="Close" (click)="closeErrorAlert()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </h4>         
+        </ion-text>
+        <br> 
+      </ion-col>    
+    </ion-row> 
+    <ion-row>      
+      <ion-col>      
+       <div class="ion-register-container">      
+         <form novalidate [formGroup]="registerForm" (ngSubmit)="createAccount()">         
+          <ion-text color="tertiary">
+            <h5 class="text-center">Create your TravisComms Account</h5>
+            <hr>
+          </ion-text>     
+           <ion-list lines="full">
+             <ion-item>
+               <ion-label position="stacked" class="ion-form-font">First Name <ion-text color="danger">*</ion-text></ion-label>
+               <ion-input type="text" formControlName="firstName"></ion-input>
+             </ion-item>
+       
+             <ion-item>
+               <ion-label position="stacked" class="ion-form-font">Last Name <ion-text color="danger">*</ion-text></ion-label>
+               <ion-input type="text" formControlName="lastName"></ion-input>
+             </ion-item>
+       
+             <ion-item>
+               <ion-label position="stacked" class="ion-form-font">Email Address <ion-text color="danger">*</ion-text></ion-label>
+               <ion-input type="text" formControlName="emailAddress"></ion-input>
+               <span class="text-danger font-weight-bold">
+                 {{ emailValidationMessage }}
+               </span>
+             </ion-item>      
+             <ion-item>
+               <ion-label position="stacked" class="ion-form-font">Company Name</ion-label>
+               <ion-input  type="text" formControlName="company"></ion-input>
+             </ion-item> 
+             
+             <div formGroupName="passwordGroup">
+               <ion-item>
+                 <ion-label position="stacked" class="ion-form-font">Password <ion-text color="danger">*</ion-text></ion-label>
+                 <ion-input type="password" formControlName="password"></ion-input>
+                 <app-password-strength class="text-center" (passwordStrength)="passwordValid($event)" [passwordToCheck]="registerForm.get('passwordGroup.password').value"></app-password-strength>
+                 <span class="text-danger font-weight-bold">
+                   {{ invalidPasswordMessage }}
+                 </span>
+               </ion-item>              
+               <ion-item>
+                 <ion-label position="stacked" class="ion-form-font">Confirm Password <ion-text color="danger">*</ion-text></ion-label>
+                 <ion-input type="password" formControlName="confirmPassword"></ion-input>
+                 <span class="text-danger font-weight-bold">
+                   {{ passwordMismatchMessage }}
+                 </span>
+               </ion-item>
+             </div>                 
+               <ion-grid>
+                 <ion-row formGroupName="subscriptionTypeGroup">
+                   <ion-col *ngFor="let subscriptiontype of subscriptionTypes; let i = index" >
+                     <ion-item class="ion-form-item">
+                       <ion-label *ngIf="subscriptiontype.price > 0">{{subscriptiontype.name}} (€{{subscriptiontype.price}} per month)</ion-label>
+                       <ion-label *ngIf="subscriptiontype.price === 0">{{subscriptiontype.name}} ({{subscriptiontype.periodInDays}} Days)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ion-label>
+                       <ion-checkbox *ngIf="subscriptiontype.price > 0" color="tertiary" slot="start" value="paid" formControlName="paidSubscriptionType" (click)="setSubscriptionType('paid')"></ion-checkbox>
+                       <!-- <ion-input [hidden]="subscriptiontype.price > 0" formControlName="paidSubscriptionId">{{subscriptiontype.subscriptionTypeId}}</ion-input> -->
+                       <ion-checkbox *ngIf="subscriptiontype.price === 0" color="dark" slot="start" value="trial" formControlName="trialSubscriptionType" (click)="setSubscriptionType('trial')"></ion-checkbox>
+                       <!-- <ion-input [hidden]="subscriptiontype.price === 0" formControlName="trialSubscriptionId">{{subscriptiontype.subscriptionTypeId}}</ion-input> -->
+                     </ion-item>              
+                   </ion-col>
+                 </ion-row>
+                 <ion-row>
+                   <ion-col>
+                     <ion-item *ngIf="!registerForm.get('subscriptionTypeGroup.trialSubscriptionType').value && !registerForm.get('subscriptionTypeGroup.paidSubscriptionType').value">
+                       <span class="text-danger text-center font-weight-bold">
+                         Please select a subscription 
+                       </span>
+                     </ion-item>
+                   </ion-col>
+                 </ion-row>
+               </ion-grid>
+             
+           </ion-list>
+           <div class="ion-padding" style="text-align: center;">
+             <ion-button [disabled]="!registerForm.valid" class="small" fill="outline" type="submit" color="primary">Create account</ion-button>
+           </div>
+         </form>
+       </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+ 
  
   

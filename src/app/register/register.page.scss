@@ -1,5 +1,14 @@
 .ion-register-container {
-    margin-top: 15%; 
+    margin-top: 10%; 
+}
+.ion-register-message {
+    margin-top: 5%;
+}
+
+@media (min-width: 1024px) {
+    .ion-container {
+        width: 45%;
+    }
 }
 .ion-form-font{
     font-size: 20px;

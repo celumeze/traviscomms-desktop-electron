@@ -3,7 +3,7 @@ export class ValidatorMessages {
         const validationMessages = {
             email: 'Plese enter a valid email address\n',
             textInputMatch: 'Passwords do not match\n',
-            invalidPassword: 'Alphanumeric, upper & lower case letters with symbols'
+            invalidPassword: 'Should contain numbers, upper & lower case letters and symbols'
         };
         return validationMessages;
     }

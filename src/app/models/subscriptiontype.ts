@@ -1,5 +1,5 @@
 export interface SubscriptionType {
-    id: string;
+    subscriptionTypeId: string;
     name: string;
     price: number;
     periodInDays: number;
