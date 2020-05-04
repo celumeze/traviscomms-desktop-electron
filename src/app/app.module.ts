@@ -11,6 +11,9 @@ import { NgxElectronModule } from 'ngx-electron';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { RegisterPage } from './register/register.page';
+import { LoginPage } from './login/login.page';
+import { HomePage } from './home/home.page';
 
 @NgModule({
   declarations: [AppComponent],

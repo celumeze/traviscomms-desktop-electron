@@ -34,8 +34,8 @@ function subscriptionSelectionCheck(
 
 @Component({
   selector: 'app-register',
-  templateUrl: './register.page.html',
-  styleUrls: ['./register.page.scss'],
+  templateUrl: 'register.page.html',
+  styleUrls: ['register.page.scss'],
 })
 export class RegisterPage implements OnInit {
   registerForm: FormGroup;
@@ -93,15 +93,15 @@ export class RegisterPage implements OnInit {
 
     emailFormControl.valueChanges.subscribe((value) => {
         this.emailValidationMessage =
-        CommonValidators.setValidationMessage(emailFormControl, ValidatorMessages.getRegFormValidationMessages());
+        CommonValidators.setValidationMessage(emailFormControl, ValidatorMessages.getAccountFormValidationMessages());
     });
     confirmPasswordFormControl.valueChanges.subscribe((value) => {
       this.passwordMismatchMessage =
-      CommonValidators.setValidationMessage(confirmPasswordFormControl, ValidatorMessages.getRegFormValidationMessages());
+      CommonValidators.setValidationMessage(confirmPasswordFormControl, ValidatorMessages.getAccountFormValidationMessages());
   });
     passwordFormControl.valueChanges.subscribe((value) => {
       this.invalidPasswordMessage =
-      CommonValidators.setValidationMessage(passwordFormControl, ValidatorMessages.getRegFormValidationMessages());
+      CommonValidators.setValidationMessage(passwordFormControl, ValidatorMessages.getAccountFormValidationMessages());
   });
   }
  
