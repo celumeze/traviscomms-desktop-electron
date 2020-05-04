@@ -2,7 +2,7 @@
 <ion-content>
 
   <ion-grid class="ion-container"> 
-    <ion-row class="ion-register-message">
+    <ion-row class="ion-account-message">
       <ion-col class="text-center">
         <ion-text>
           <h4 *ngIf="responseMessage.errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert"> 
@@ -17,7 +17,7 @@
     </ion-row> 
     <ion-row>      
       <ion-col>      
-       <div class="ion-register-container">      
+       <div class="ion-account-container">      
          <form novalidate [formGroup]="registerForm" (ngSubmit)="createAccount()">         
           <ion-text color="tertiary">
             <h5 class="text-center">Create your TravisComms Account</h5>
@@ -70,9 +70,7 @@
                        <ion-label *ngIf="subscriptiontype.price > 0">{{subscriptiontype.name}} (€{{subscriptiontype.price}} per month)</ion-label>
                        <ion-label *ngIf="subscriptiontype.price === 0">{{subscriptiontype.name}} ({{subscriptiontype.periodInDays}} Days)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</ion-label>
                        <ion-checkbox *ngIf="subscriptiontype.price > 0" color="tertiary" slot="start" value="paid" formControlName="paidSubscriptionType" (click)="setSubscriptionType('paid')"></ion-checkbox>
-                       <!-- <ion-input [hidden]="subscriptiontype.price > 0" formControlName="paidSubscriptionId">{{subscriptiontype.subscriptionTypeId}}</ion-input> -->
                        <ion-checkbox *ngIf="subscriptiontype.price === 0" color="dark" slot="start" value="trial" formControlName="trialSubscriptionType" (click)="setSubscriptionType('trial')"></ion-checkbox>
-                       <!-- <ion-input [hidden]="subscriptiontype.price === 0" formControlName="trialSubscriptionId">{{subscriptiontype.subscriptionTypeId}}</ion-input> -->
                      </ion-item>              
                    </ion-col>
                  </ion-row>

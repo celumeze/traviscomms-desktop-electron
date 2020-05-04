@@ -8,28 +8,14 @@ import { IonicModule } from '@ionic/angular';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
-
-const routes: Routes = [
-  {
-    path: 'home',
-    component: HomePage,
-    children: [
-      {path: 'register', loadChildren: '../register/register.module#RegisterPageModule'}
-    ]
-  },
-  {
-    path: '',
-    redirectTo: '/home/register',
-    pathMatch: 'full'
-  }
-];
+import { RegisterPage } from '../register/register.page';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    HomePageRoutingModule
   ],
   declarations: [HomePage]
 })

@@ -229,4 +229,30 @@
   ion-title.title-large {
     --color: white;
   }
+
+  /*
+  *
+  * Custom Styles
+  -----------------------------
+  */
+  .ion-account-container {
+    margin-top: 10%; 
+}
+.ion-account-message {
+    margin-top: 5%;
+}
+
+@media (min-width: 1024px) {
+    .ion-container {
+        width: 45%;
+    }
+}
+.ion-form-font{
+    font-size: 20px;
+}
+.ion-form-item{
+    border-color:#5138c2;
+    border-width: 2px;
+    border-style: solid;
+}
 }
