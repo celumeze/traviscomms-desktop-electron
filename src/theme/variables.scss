@@ -235,11 +235,16 @@
   * Custom Styles
   -----------------------------
   */
-  .ion-account-container {
-    margin-top: 10%; 
+
+.ion-home-buttons {
+  margin-top: 8%;
+  animation-name: homebuttons;
+  animation-duration: 4s;
 }
-.ion-account-message {
-    margin-top: 5%;
+
+.ion-home-text {
+  color:#3e58ac;
+  font-size: 25px;
 }
 
 @media (min-width: 1024px) {
@@ -247,12 +252,8 @@
         width: 45%;
     }
 }
-.ion-form-font{
-    font-size: 20px;
-}
-.ion-form-item{
-    border-color:#5138c2;
-    border-width: 2px;
-    border-style: solid;
+@keyframes homebuttons {
+  from {opacity: 0.2;}
+  to {opacity: 1.0;}
 }
 }

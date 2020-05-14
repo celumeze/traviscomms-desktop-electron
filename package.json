@@ -30,6 +30,7 @@
     "electron": "^8.2.5",
     "graceful-fs": "^4.2.3",
     "ngx-electron": "^2.2.0",
+    "oidc-client": "^1.10.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

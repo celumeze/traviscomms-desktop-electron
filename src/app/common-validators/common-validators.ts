@@ -51,7 +51,15 @@ export class CommonValidators {
     return loading;    
   }
 
-  //for message
+  //for page loading home buttons
+  public static async presentLoadingForHomePage(loadingController: LoadingController): Promise<HTMLIonLoadingElement> {
+    const loading = await loadingController.create({
+      message: 'Please wait...',
+      duration: 9000
+    });
+    await loading.present();
+    return loading;    
+  }
 
   //for displaying success toast message
   public static async showToaster(toastController: ToastController, message: string) {
