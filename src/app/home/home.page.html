@@ -1,14 +1,23 @@
 
-  <ion-tabs>
-    <ion-tab-bar slot="top">
-      <ion-tab-button tab="register">
-        <ion-icon name="person-circle"></ion-icon>
-        <ion-label>Create Account</ion-label>
-      </ion-tab-button>
-  
-      <ion-tab-button tab="login">
-        <ion-icon name="log-in"></ion-icon>
-        <ion-label>Login</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
-  </ion-tabs>
+  <ion-content>
+    <ion-grid> 
+        <ion-row class="ion-home-buttons">       
+          <ion-col>
+            <ion-text>
+              <div class="ion-padding" style="text-align: center;">
+                <h4 class="ion-home-text">Welcome to TravisComms</h4>
+              </div>
+              <div class="ion-padding" style="text-align: center;">
+                <ion-button fill="outline" class="large" type="submit" color="primary"  (click)="login()">Sign In</ion-button>
+              </div> 
+              <div class="ion-padding" style="text-align: center;">
+                <ion-button fill="outline" class="large" type="submit" color="primary">Forgot Password</ion-button>
+              </div> 
+              <div class="ion-padding" style="text-align: center;">
+                <ion-button fill="outline" class="large" type="submit" color="primary" (click)="goToSignUpPage()">Sign Up</ion-button>
+              </div> 
+            </ion-text>
+          </ion-col>          
+        </ion-row>
+    </ion-grid>
+  </ion-content>
